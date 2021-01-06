@@ -1,5 +1,8 @@
 package hello.hellospring6.domain;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Member {
 	
 	private Long id;
