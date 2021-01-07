@@ -1,6 +1,6 @@
-package hellospring.hellospring.repository;
+package hello.hellospring7.repository;
 
-import hellospring.hellospring.domain.Member;
+import hello.hellospring7.domain.Member;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import javax.sql.DataSource;
 import java.sql.*;
@@ -29,7 +29,7 @@ public class JdbcMemberRepository implements MemberRepository {
             if (rs.next()) {
                 member.setId(rs.getLong(1));
             } else {
-                throw new SQLException("id ì¡°íšŒ ì‹¤íŒ¨");
+                throw new SQLException("id Á¶È¸ ½ÇÆÐ");
             }
             return member;
         } catch (Exception e) {

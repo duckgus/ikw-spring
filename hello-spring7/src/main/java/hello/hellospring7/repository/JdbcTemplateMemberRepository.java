@@ -1,6 +1,6 @@
-package hellospring.hellospring.repository;
+package hello.hellospring7.repository;
 
-import hellospring.hellospring.domain.Member;
+import hello.hellospring7.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -19,7 +19,7 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    @Autowired // 생성자가 한개일때 빈으로 등록되면 생략가능
+    @Autowired // 
     public JdbcTemplateMemberRepository(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }

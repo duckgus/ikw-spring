@@ -11,7 +11,7 @@ import java.beans.Transient;
 import java.util.*;
 
 //@Service
-@Transactional //데이터를 저장하거나 변경할때는 필수
+//@Transactional //데이터를 저장하거나 변경할때는 필수
 public class MemberService {
 
     private final MemberRepository memberRepository;
