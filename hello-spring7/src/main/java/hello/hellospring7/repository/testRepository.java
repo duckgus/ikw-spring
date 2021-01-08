@@ -1,37 +1,30 @@
 package hello.hellospring7.repository;
 
 import hello.hellospring7.domain.Member;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
+import java.util.*;
 import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
-public class JdbcTemplateMemberRepository implements MemberRepository {
+public class testRepository implements MemberRepository{
 
     private final JdbcTemplate jdbcTemplate;
 
-    @Autowired // 
-    public JdbcTemplateMemberRepository(DataSource dataSource) {
-        jdbcTemplate = new JdbcTemplate(dataSource);
+    public testRepository(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
     public Member save(Member member) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-        jdbcInsert.withTableName("member").usingGeneratedKeyColumns("id");
+        jdbcInsert.withTableName("member").usingGeneratedKeyColumns("id");//테이블 사용 키
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", member.getName());
-        Number key = jdbcInsert.executeAndReturnKey(new
-                MapSqlParameterSource(parameters));
+        Number key = jdbcInsert.executeAndReturnKey(
+                new MapSqlParameterSource(parameters));
         member.setId(key.longValue());
         return member;
     }
@@ -50,9 +43,12 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
 
     @Override
     public List<Member> findAll() {
-        return jdbcTemplate.query("select * form member", memberRowMapper());
+        return jdbcTemplate.query("select * from member", memberRowMapper());
     }
 
+    public List<Member> delete() {
+        return jdbcTemplate.query("Truncate member", memberRowMapper());
+    }
     private RowMapper<Member> memberRowMapper() {
         return (rs, rowNum) -> {
             Member member = new Member();

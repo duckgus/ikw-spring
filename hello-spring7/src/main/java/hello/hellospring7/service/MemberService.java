@@ -5,6 +5,9 @@ import java.util.*;
 import hello.hellospring7.domain.Member;
 import hello.hellospring7.repository.MemberRepository;
 
+import javax.transaction.Transactional;
+
+@Transactional
 public class MemberService {
 
 	private final MemberRepository memberRepository;
@@ -13,7 +16,7 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 	
-	//È¸¿ø°¡ÀÔ
+	//
 	public Long join(Member member) {
 		
 		validateDuplicatMember(member);
@@ -24,16 +27,21 @@ public class MemberService {
 	private void validateDuplicatMember(Member member) {
 		memberRepository.findByName(member.getName())
 		.ifPresent(m-> {
-			throw new IllegalStateException("ÀÌ¹Ì Á¸ÀçÇÏ´Â È¸¿øÀÔ´Ï´Ù.");
+			throw new IllegalStateException("ì´ë¯¸ ì¡´ì¬í•˜ëŠ” íšŒì›ì…ë‹ˆë‹¤");
 		});
 	}
 	
-	//ÀüÃ¼ È¸¿ø Á¶È¸
+	//
 	public List<Member> findMembers() {
 		return memberRepository.findAll();
 	}
-	
+
 	public Optional<Member> findOne(Long memberId){
 		return memberRepository.findById(memberId);
 	}
+
+	public List<Member> delete(Member member){
+		return memberRepository.delete();
+	}
+
 }
