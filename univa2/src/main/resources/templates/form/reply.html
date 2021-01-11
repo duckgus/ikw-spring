@@ -1,0 +1,71 @@
+<section class="hk-sec-wrapper" th:fragment="forum(forum)" style="width:100%; padding:0px;">
+   <div class="row">
+      <div class="col-sm">
+         <div class="w-100" id="tag-list"></div>
+      </div>
+   </div>
+
+   <!-- 댓글달기 (제목, 내용)폼-->
+   <div class="row">
+      <div class="col-sm">
+         <form>
+            <div class="form-group">
+               <div class="input-group">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text" id="inputGroup-sizing-default" style="padding:0px 30px 0px 30px; ">제 목</span>
+                  </div>
+                  <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" th:name="'reply-title-' + ${forum.idx}" style="background:#fff;">
+               </div>
+            </div>
+            <div class="form-group mb-0">
+               <div class="input-group">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text" style="padding:0px 30px 0px 30px">내 용</span>
+                  </div>
+                  <textarea class="form-control" aria-label="With textarea" style="min-height:300px;" th:name="'reply-content-' + ${forum.idx}"></textarea>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+
+   <!-- 파일업로드 -->
+   <section class="hk-sec-wrapper">
+      <div class="card-body" style="padding:0px; margin:30px 0px 10px 0px;">
+         <i class="glyphicon glyphicon-search"></i>
+         첨부파일을 업로드 할수 있습니다 (최대 5개)
+      </div>
+      <div class="row">
+         <div class="col-sm">
+            <div class="dropify-wrapper">
+               <div class="dropify-message">
+                  <span class="file-icon"></span>
+                  <p>Drag and drop a file here or click</p>
+                  <p class="dropify-error">Ooops, something wrong appended.</p>
+               </div>
+               <div class="dropify-loader"></div>
+               <div class="dropify-errors-container">
+                  <ul></ul>
+               </div>
+               <input type="file" class="dropify" name="files[]" th:id="'reply-uploads-' + ${forum.idx}" multiple=""><button type="button" class="dropify-clear">Remove</button>
+               <div class="dropify-preview">
+                  <span class="dropify-render"></span>
+                  <div class="dropify-infos">
+                     <div class="dropify-infos-inner">
+                        <p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner"></span></p>
+                        <p class="dropify-infos-message">Drag and drop or click to replace</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <div class="row">
+      <div class="col-sm">
+         <div class="card-body" style="padding:0px; margin-bottom:10px;">
+            <button type="button" class="btn btn-success" style="margin-top:30px; float:right;" th:onclick="'submitReply(' + ${forum.idx} +')'">등록하기</button>
+         </div>
+      </div>
+   </div>
+</section>

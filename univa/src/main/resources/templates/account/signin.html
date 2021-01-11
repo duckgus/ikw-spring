@@ -89,10 +89,10 @@
         formData.append("username", $("input[name=username]").val());
         formData.append("password", $("input[name=password]").val());
 
-        postAPI("/forum/signin", formData, function (result) {
+        postAPI("/signin", formData, function (result) {
           switch (result) {
           case "ok":
-            location.href = "/forum";
+            location.href = "";
             break;
           case "error":
             alert("정보가 일치하지 않습니다.");

@@ -22,7 +22,7 @@
                   <div class="col-xl-12">
                      <div class="auth-form-wrap pt-xl-0 pt-70">
                         <div class="auth-form w-xl-30 w-lg-55 w-sm-75 w-100">
-                           <a class="d-flex auth-brand align-items-center justify-content-center  mb-20" href="/forum">
+                           <a class="d-flex auth-brand align-items-center justify-content-center  mb-20" href="/Univa">
                            <img class="brand-img d-inline-block mr-5" th:src="@{/dist/img/logo.png}" alt="brand" />
                            <span class="text-dark font-23">Univa</span>
                            </a>
@@ -60,7 +60,7 @@
                               </div>
                               <button class="btn btn-warning btn-block" onclick="submit()">Register</button>
                               <div class="option-sep">or</div>
-                              <p class="text-center">Already have an account? <a href="/forum/signin">Sign In</a></p>
+                              <p class="text-center">Already have an account? <a href="/signin">Sign In</a></p>
                            </div>
                         </div>
                      </div>
@@ -129,10 +129,10 @@
         	formData.append("email", $("input[name=email]").val());
         	formData.append("nation", $("input[name=nation]").val());
         	formData.append("file", image_url);
-        	postAPI("/forum/signup", formData, function (result) {
+        	postAPI("/signup", formData, function (result) {
             if(result == "ok"){
               alert("회원가입이 완료되었습니다. 로그인을 해주세요.")
-              location.href="/forum/signin";
+              location.href="/signin";
             }
             else{
               alert("중복된 닉네임입니다.")

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+   <head th:replace="widget/head :: head"></head>
+   <body>
+      <!-- /Preloader -->
+      <!-- HK Wrapper -->
+      <div class="hk-wrapper hk-alt-nav">
+         <!-- Header -->
+         <div th:replace="widget/menu :: menu('univa')"></div>
+         <!-- Main Content -->
+         <div class="hk-pg-wrapper" style="padding:57px 0px 60px 0px;">
+            <!-- Row -->
+            <div class="row">
+               <div class="col-xl-12">
+                  <!-- Preview Sec -->
+                  <!-- /Preview Sec -->
+                  <!-- Design Sec -->
+
+                  <!-- /Utilities Sec -->
+               </div>
+            </div>
+            <!-- /Row -->
+         </div>
+         <!-- /Main Content -->
+      </div>
+      <!-- /HK Wrapper -->
+      <!-- jQuery -->
+      <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+      <!-- Bootstrap Core JavaScript -->
+      <script th:src="@{/vendors/popper.js/dist/umd/popper.min.js}"></script>
+      <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+      <!-- Owl JavaScript -->
+      <script th:src="@{/vendors/owl.carousel/dist/owl.carousel.min.js}"></script>
+      <!-- FeatherIcons JavaScript -->
+      <script th:src="@{/dist/js/feather.min.js}"></script>
+      <!-- Gallery JavaScript -->
+      <script th:src="@{/vendors/lightgallery/dist/js/lightgallery-all.min.js}"></script>
+      <script th:src="@{/dist/js/froogaloop2.min.js}"></script>
+      <!-- Init JavaScript -->
+      <script th:src="@{/dist/js/jquery.slimscroll.js}"></script>
+      <script th:src="@{/dist/js/lightgallery-all.js}"></script>
+      <script th:src="@{/dist/js/landing-data.js}"></script>
+      <script th:src="@{/dist/js/init.js}"></script>
+   </body>
+</html>
