@@ -1,0 +1,96 @@
+<div class="accordion accordion-type-2 accordion-flush" th:fragment="forum(forum)" >
+   <div class="card card-profile-feed border-top-0 rounded-top-0">
+      <div th:id="'collapse_'+${forum.idx}" class="collapse" role="tabpanel" >
+         <div class="user-activity" th:if="${forum.children != null}">
+            <div class="card-body" style="border-top: 1px solid #eaecec;">
+              <span th:fragment="replyForm" th:remove="tag">
+                <div class="media" th:each="replyList : ${forum.children}">
+
+                    <!-- 프로필사진 -->
+                     <div class="media-img-wrap">
+                         <div class="avatar avatar-sm">
+                              <img th:src="@{${replyList.user.image_url} != null ? '/forum/img?id=' + ${replyList.user.image_url} : '/dist/img/img-thumb.jpg'} "
+                                 alt="user" class="avatar-img rounded-circle">
+                         </div>
+                     </div>
+
+                     <!-- 유저이름, 날자, 이름, 이미지 -->
+                     <div class="media-body">
+                        <div class="mb-10">
+                           <span class="d-block mb-20">
+                              <span class="font-weight-500 text-dark text-capitalize" th:text="${replyList.user.username}"></span>
+                              <div class="d-flex mb-10">
+                                 <span class="font-14 text-light mr-15" th:text="${#temporals.format(replyList.update_date, 'yyyy/MM/dd HH:mm')}"></span>
+                                 <a href="#" class="collapsed font-14 text-light text-capitalize font-weight-500" data-toggle="collapse" th:href="'#input_reply_'+${replyList.idx}" aria-expanded="false">reply</a>
+                              </div>
+                              <p class="mt-10" style="font-weight:bold; color:#324148; margin-bottom:10px !important;" th:text="${replyList.title}"></p>
+                              <span class="mt-10" style="margin-bottom:10px !important;" th:utext="${#strings.replace(#strings.escapeXml(replyList.content),'&#10;','&lt;br&gt;')}"></span>
+
+                              <div class="emailapp-wrap">
+                                  <div class="email-box" style="margin-left:0px;">
+                                    <div class="emailapp-right" style="min-width:100%; flex:none; right:0%; position:unset;">
+                                      <div class="email-body">
+                                        <div class="email-text-wrap mt-30">
+                                           <div class="d-flex flex-wrap">
+                                            <a class="w-sm-150p w-80p mr-10 mb-10" th:each="files,num : ${replyList.files}">
+                                              <img class="img-fluid rounded"
+                                                 th:if="${num.index < 6 and (#strings.contains(#strings.toLowerCase(files.file_url),'.png') or (#strings.contains(#strings.toLowerCase(files.file_url),'.jpg')))}"
+                                                 th:src="'/forum/getfile?id=' + ${files.idx}"
+                                                 alt="Card image cap"
+                                                 style="max-width:150px;"/>
+                                            </a>
+                                          </div>
+                                        </div>
+
+                                        <!-- 파일정보 -->
+                                        <hr class="hr-light" th:if="${#lists.size(replyList.files)} > 0">
+                                        <div class="email-attachment-wrap" th:if="${#lists.size(replyList.files)} > 0">
+                                           <div class="email-attachment-block" th:id="'file-list-' + ${replyList.idx}">
+                                              <a th:href="'/forum/getfile?id=' + ${files.idx}" th:each="files,num : ${replyList.files}" th:download="${files.name}" th:data-url="'/forum/getfile?id=' + ${files.idx}" th:data-name="${files.name}">
+                                                 <div class="card card-sm w-200p">
+                                                    <div class="card-body d-flex align-items-center" style="background:#f5f5f5;">
+                                                       <img src="/dist/img/jpgicon.png" class="d-inline-block mr-10" alt="attachicon" >
+                                                       <span class="d-inline-block mnw-0">
+                                                       <span class="d-block file-name text-truncate" th:text="${files.name}"></span>
+
+                                                       <small class="d-block file-size text-truncate"
+                                                              th:text="${#numbers.formatDecimal((files.file_size)/2^10, 1, 'POINT', 1, 'POINT')} + ' KB'"></small>
+                                                       </span>
+                                                    </div>
+                                                 </div>
+                                              </a>
+                                           </div>
+                                           <div class="d-flex ml-auto">
+                                              <a th:onclick="'allDownload(' + ${replyList.idx} +')'" style="cursor:pointer;"><i class="zmdi zmdi-download"></i></a>
+                                           </div>
+                                        </div>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                              </div>
+
+                           </span>
+
+                           <!-- 답글 달기-->
+                          <div class="accordion accordion-type-2 accordion-flush">
+                              <div class="card card-profile-feed border-top-0 rounded-top-0">
+                                <div th:id="'input_reply_'+${replyList.idx}" class="collapse" role="tabpanel" >
+                                      <div th:replace="/form/reply :: forum(${replyList})" ></div>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                        <div
+                           th:with="forum = ${replyList}"
+                           th:include="this :: replyForm" class="media"
+                           th:remove="tag"></div>
+
+                      </div>
+                </div>
+              </span>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

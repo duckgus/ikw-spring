@@ -46,9 +46,6 @@ public class testRepository implements MemberRepository{
         return jdbcTemplate.query("select * from member", memberRowMapper());
     }
 
-    public List<Member> delete() {
-        return jdbcTemplate.query("Truncate member", memberRowMapper());
-    }
     private RowMapper<Member> memberRowMapper() {
         return (rs, rowNum) -> {
             Member member = new Member();

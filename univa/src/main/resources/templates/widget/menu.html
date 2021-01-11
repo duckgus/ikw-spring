@@ -1,0 +1,85 @@
+<!--
+  각 페이지 헤더 상단메뉴
+-->
+
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:fragment="menu(page)">
+<nav class="navbar navbar-expand-xl navbar-light fixed-top hk-navbar hk-navbar-alt">
+   <a class="navbar-toggle-btn nav-link-hover navbar-toggler" href="javascript:void(0);"
+      data-toggle="collapse" data-target="#navbarCollapseAlt" aria-controls="navbarCollapseAlt"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="feather-icon">
+         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" class="feather feather-menu">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+         </svg>
+      </span>
+   </a>
+   <a class="navbar-brand" href="/forum">
+   <img class="brand-img d-inline-block mr-10" th:src="@{/dist/img/logo.png}" alt="brand">Univa
+   </a>
+   <div class="collapse navbar-collapse" id="navbarCollapseAlt">
+      <ul class="navbar-nav">
+         <li class="nav-item dropdown show-on-hover" th:classappend="${page} == 'univa' ? 'active'">
+              <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor:pointer;">
+              서비스소개
+              </a>
+              <div class="dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" >
+                 <a class="dropdown-item" href="/forum/service/univa">Univa</a>
+                 <a class="dropdown-item" href="/forum/service/terms">개인정보 이용약관</a>
+              </div>
+           </li>
+           <li class="nav-item dropdown show-on-hover" onclick="location.href='/forum/main'" th:classappend="${page} == 'main' ? 'active'">
+              <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor:pointer;">
+                Univa 포럼
+              </a>
+              <div class="dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                 <a class="dropdown-item" href="/forum/mypage?type=question">나의 질문</a>
+                 <a class="dropdown-item" href="/forum/main/write">질문 등록하기</a>
+              </div>
+           </li>
+           <li class="nav-item" th:classappend="${page} == 'call' ? 'active'">
+              <a class="nav-link" href="/forum/service/call" >고객센터</a>
+           </li>
+        </ul>
+        <!-- <form class="navbar-search-alt">
+           <div class="input-group">
+              <div class="input-group-prepend">
+                 <span class="input-group-text"><i class="ion ion-ios-search"></i></span>
+              </div>
+              <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+           </div>
+        </form> -->
+     </div>
+     <ul class="navbar-nav hk-navbar-content">
+        <li class="nav-item dropdown dropdown-authentication">
+           <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="media">
+                  <div class="media-img-wrap">
+                      <div class="avatar">
+                          <img th:src="@{${session.ForumUserSession?.image_url} != null ? '/forum/img?id=' + ${session.ForumUserSession?.image_url} : '/dist/img/img-thumb.jpg'} " alt="user" class="avatar-img rounded-circle">
+                      </div>
+                  </div>
+                 <div class="media-body">
+                    <span th:onclick="location.href='/signin'" th:if="${session.ForumUserSession?.username == null}">로그인</span>
+                    <span th:unless="${session.ForumUserSession?.username == null}" th:text="${session.ForumUserSession?.nickname} + '님'"></span>
+                    <!-- <span>홍길동님<i class="zmdi zmdi-chevron-down"></i></span> -->
+                 </div>
+              </div>
+           </a>
+           <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX" th:if="${session.ForumUserSession?.username != null}">
+              <a class="dropdown-item" href="/forum/mypage?type=profile"><i class="dropdown-icon zmdi zmdi-account"></i><span>회원 정보</span></a>
+              <a class="dropdown-item" href="/forum/mypage?type=question"><i class="dropdown-icon zmdi zmdi-card"></i><span>나의 질문</span></a>
+              <a class="dropdown-item" href="/forum/mypage?type=forum"><i class="dropdown-icon zmdi zmdi-email"></i><span>나의 포럼</span></a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/forum/signout"><i class="dropdown-icon zmdi zmdi-power"></i><span>Log out</span></a>
+           </div>
+           <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX" th:unliess="${session.ForumUserSession?.username != null}">
+              <a class="dropdown-item" href="/forum/signout"><i class="dropdown-icon zmdi zmdi-power"></i><span>로그인</span></a>
+           </div>
+        </li>
+     </ul>
+  </nav>
+</html>

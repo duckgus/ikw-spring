@@ -52,16 +52,5 @@ public class MemberController {
 		model.addAttribute("members", members);
 		return "members/List";
 	}
-
-	@PostMapping("/test")
-	public String delete(MemberForm form) {
-
-		Member member = new Member();
-		member.setName(form.getName());
-
-		memberService.delete(member);
-
-		return "redirect:/";
-	}
 }
 	

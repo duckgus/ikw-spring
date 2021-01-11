@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+ <body data-spy="scroll" data-target=".navbar" data-offset="60">
+    <div class="hk-wrapper">
+       <div class="hk-pg-wrapper px-0" style="padding-top:0px;">
+          <div class="container-fluid">
+             <!-- Row -->
+             <div class="row">
+                <div class="col-xl-12 pa-0">
+                  <div class="bg-white shadow-bottom">
+                      <div class="container" style="max-width:1600px;">
+                         <ul class="nav nav-light nav-tabs" role="tablist" id="menu-tab">
+                            <li class="nav-item">
+                               <a class="d-flex h-60p align-items-center nav-link active" th:onclick="'onclickRow(\'content\', ' + ${forum.idx} + ')'" style="cursor:pointer;">게시물 정보</a>
+                            </li>
+                            <li class="nav-item">
+                               <a class="d-flex h-60p align-items-center nav-link" th:onclick="'onclickRow(\'history\', ' + ${forum.idx} + ')'" style="cursor:pointer;">게시물 이력</a>
+                            </li>
+                            <li class="nav-item">
+                               <a class="d-flex h-60p align-items-center nav-link" th:onclick="'onclickRow(\'profile\', ' + ${forum.idx} + ')'" style="cursor:pointer;">게시자 정보</a>
+                            </li>
+                            <li class="nav-item">
+                               <a class="d-flex h-60p align-items-center nav-link" th:onclick="'onclickRow(\'edit\', ' + ${forum.idx} + ')'" style="cursor:pointer;">수정요청</a>
+                            </li>
+                         </ul>
+                      </div>
+                   </div>
+                   <div class="tab-content mt-sm-60">
+                      <div class="tab-pane fade show active" role="tabpanel">
+                         <div class="container"  style="max-width:1600px;">
+                            <div class="hk-row">
+                              <div class="col-xl-12 pa-0">
+                                 <div class="tab-content sm-60">
+                                    <div class="tab-pane fade show active" role="tabpanel">
+                                       <div class="container"  style="max-width:1600px;">
+                                          <div class="hk-row">
+                                             <div class="col-lg-12" >
+                                               <div class="card-columns card-column-1" style="margin-bottom:10px;">
+                                                <!-- 포럼 한개의 정보 -->
+                                                <div th:replace="/form/card :: forum(${forum})"></div>
+
+                                                <!-- 포럼 한개의 댓글 리스트 -->
+                                                <div th:replace="/form/reply_list :: forum(${forum})"></div>
+                                               </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <!-- /Row -->
+          </div>
+       </div>
+    </div>
+ </body>
+</html>

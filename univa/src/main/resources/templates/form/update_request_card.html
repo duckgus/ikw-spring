@@ -1,0 +1,90 @@
+<div class="card card-profile-feed mb-0 rounded-bottom-0" th:fragment="forum(list)">
+   <div class="emailapp-wrap">
+      <div class="email-box" style="margin-left:0px;">
+         <div class="emailapp-right" style="min-width:100%; flex:none; right:0%; position:unset;">
+            <div class="email-body" style="background:#fff0f0; margin-left:10px; margin-right:10px;">
+               <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+                  <div class="nicescroll-bar" tabindex="-50" style="overflow: hidden; width: auto; height: 100%; outline: none;">
+                     <div>
+
+                       <!-- 게시물에 속한 과목들 -->
+                        <div class="email-subject-head" >
+                           <h4 th:text="${list.title}"></h4>
+                           <a class="text-success ml-auto" style="float:left; cursor:pointer;" th:onclick="'modifyApply(' + ${list.idx} + ')'">
+                             <span class="badge badge-secondary mr-10" th:each="subjects : ${list.subjects}" th:text="${subjects.subject.name}"></span>
+                             <i class="ion ion-md-checkmark font-30" style="margin-left:20px;"></i>
+                           </a>
+                        </div>
+
+                        <hr class="mt-10 mb-20">
+                        <div class="email-head">
+                           <!-- 게시자의 정보 -->
+                           <div class="media">
+                              <div class="media-img-wrap">
+                                 <div class="avatar">
+                                    <img th:src="@{${list.forumModify.user.image_url} != null ? '/forum/img?id=' + ${list.forumModify.user.image_url} : '/dist/img/img-thumb.jpg'} "
+                                       alt="user" class="avatar-img rounded-circle">
+                                 </div>
+                              </div>
+                              <div class="media-body">
+                                 <span class="text-capitalize sender-name d-inline-block" th:text="${list.forumModify.user.nickname}"></span>
+                                 <span class="sender-email d-inline-block" th:text="'(' + ${list.forumModify.user.username} + ')'"></span>
+                                 <span class="d-block">
+
+                                   <span th:text="${list.user.email} == null ? '이메일 미등록' : ${list.user.email}"></span>
+                                 </span>
+                              </div>
+                           </div>
+
+                           <!-- 등록날짜 -->
+                           <div class="head-other-wrap">
+                              <div class="d-inline-block mr-5">
+                                 <span class="d-inline-block" th:text="${#temporals.format(list.forumModify.update_date, 'yyyy/MM/dd HH:mm')}"></span>
+                              </div>
+                           </div>
+                        </div>
+
+                        <!-- 게시물에 등록된 이미지 -->
+                        <div class="email-text-wrap mt-30">
+                           <p class="mb-40" th:utext="${#strings.replace(#strings.escapeXml(list.content),'&#10;','&lt;br&gt;')}"></p>
+                           <div class="d-flex flex-wrap">
+                             <a class="w-sm-150p w-80p mr-10 mb-10" th:each="files,num : ${list.files}">
+                               <img class="img-fluid rounded"
+                                   th:if="${num.index < 6 and (#strings.contains(#strings.toLowerCase(files.name),'jpg') or #strings.contains(#strings.toLowerCase(files.name),'png'))}"
+                                   th:src="'/forum/getfile?id=' + ${files.idx}"
+                                   alt="Card image cap"
+                                   style="max-width:150px;">
+                             </a>
+                           </div>
+                        </div>
+
+                        <!-- 게시물에 등록된 파일들 -->
+                        <hr class="hr-light">
+                        <div class="email-attachment-wrap" th:if="${#lists.size(list.files)} > 0">
+                           <div class="email-attachment-block">
+                              <a href="javascript:void(0)" th:each="files,num : ${list.files}">
+                                 <div class="card card-sm w-200p">
+                                    <div class="card-body d-flex align-items-center">
+                                       <img src="/dist/img/jpgicon.png" class="d-inline-block mr-10" alt="attachicon">
+                                       <span class="d-inline-block mnw-0">
+                                       <span class="d-block file-name text-truncate" th:text="${files.name}"></span>
+                                       <small class="d-block file-size text-truncate" th:text="${files.file_size} + ' Byte'"></small>
+                                       </span>
+                                    </div>
+                                 </div>
+                              </a>
+                           </div>
+                           <div class="d-flex ml-auto">
+                              <a href="javascript:void(0)"><i class="zmdi zmdi-download"></i></a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="slimScrollBar" tabindex="-50" style="background: rgb(214, 217, 218); width: 6px; position: absolute; top: 0px; opacity: 0.8; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 808px; outline: none;"></div>
+                  <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

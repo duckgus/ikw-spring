@@ -40,8 +40,5 @@ public class MemberService {
 		return memberRepository.findById(memberId);
 	}
 
-	public List<Member> delete(Member member){
-		return memberRepository.delete();
-	}
 
 }

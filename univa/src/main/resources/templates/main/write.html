@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <title>Deepor I File Upload</title>
+      <meta name="description" content="A responsive bootstrap 4 admin dashboard template by hencework" />
+      <!-- Favicon -->
+      <link rel="shortcut icon" href="favicon.ico">
+      <link rel="icon" href="favicon.ico" type="image/x-icon">
+      <!-- Bootstrap Dropzone CSS -->
+      <link th:href="@{/vendors/dropzone/dist/dropzone.css}" rel="stylesheet" type="text/css"/>
+      <!-- Bootstrap Dropzone CSS -->
+      <link th:href="@{/vendors/dropify/dist/css/dropify.min.css}" rel="stylesheet" type="text/css"/>
+      <!-- Toggles CSS -->
+      <link th:href="@{/vendors/jquery-toggles/css/toggles.css}" rel="stylesheet" type="text/css">
+      <link th:href="@{/vendors/jquery-toggles/css/themes/toggles-light.css}" rel="stylesheet" type="text/css">
+      <!-- Custom CSS -->
+      <link th:href="@{/dist/css/style.css}" rel="stylesheet" type="text/css">
+		<style>
+		* {
+		  box-sizing: border-box;
+		}
+
+		body {
+		  font: 16px Arial;
+		}
+
+		/*the container must be positioned relative:*/
+		.autocomplete {
+		  position: relative;
+		  display: inline-block;
+		}
+
+		input {
+		  border: 1px solid transparent;
+		  background-color: #f1f1f1;
+		  padding: 10px;
+		  font-size: 16px;
+		}
+
+		input[type=text] {
+		  background-color: #f1f1f1;
+		  width: 100%;
+		}
+
+		input[type=submit] {
+		  background-color: DodgerBlue;
+		  color: #fff;
+		  cursor: pointer;
+		}
+
+		.autocomplete-items {
+		  position: absolute;
+		  border: 1px solid #d4d4d4;
+		  border-bottom: none;
+		  border-top: none;
+		  z-index: 99;
+		  /*position the autocomplete items to be the same width as the container:*/
+		  top: 100%;
+		  width:100%;
+		  max-width:300px;
+		}
+
+		.autocomplete-items div {
+		  padding: 10px;
+		  cursor: pointer;
+		  background-color: #fff;
+		  border-bottom: 1px solid #d4d4d4;
+		}
+
+		/*when hovering an item:*/
+		.autocomplete-items div:hover {
+		  background-color: #e9e9e9;
+		}
+
+		/*when navigating through the items using the arrow keys:*/
+		.autocomplete-active {
+		  background-color: DodgerBlue !important;
+		  color: #ffffff;
+		}
+		</style>
+   </head>
+   <body data-spy="scroll" data-target=".navbar" data-offset="60">
+      <div class="preloader-it">
+         <div class="loader-pendulums"></div>
+      </div>
+      <div class="hk-wrapper">
+         <div th:replace="widget/menu :: menu('main')"></div>
+         <div class="hk-pg-wrapper px-0">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-xl-12 pa-0">
+                     <div class="hk-pg-wrapper" style="min-height: 937px;">
+                        <!-- Container -->
+                        <div class="container">
+                           <!-- Title -->
+                           <div class="hk-pg-header">
+                              <h4 class="hk-pg-title">
+                                 <span class="pg-title-icon">
+                                    <span class="feather-icon">
+                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload">
+                                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                          <polyline points="17 8 12 3 7 8"></polyline>
+                                          <line x1="12" y1="3" x2="12" y2="15"></line>
+                                       </svg>
+                                    </span>
+                                 </span>
+                                 질문 등록하기
+                              </h4>
+                           </div>
+                           <!-- /Title -->
+                           <!-- Row -->
+                           <div class="row">
+                              <div class="col-xl-12">
+                                 <section class="hk-sec-wrapper">
+                                    <div class="row">
+                                       <div class="col-sm">
+                                          <div class="card-body" style="padding:0px;">
+                                             <i class="glyphicon glyphicon-search"></i>
+                                             태그를 검색하여 적용해주세요.
+                                             <input class="form-control" id="input-tag" type="text" name="tag" placeholder="태그명을 입력하세요" style="max-width:300px; margin-top:10px;">
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <div class="w-100" id="tag-list">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                       <div class="col-sm">
+                                          <div class="card-body" style="padding:0px; margin:30px 0px 10px 0px;">
+                                             <i class="glyphicon glyphicon-search"></i>
+                                             질문을 작성해주세요
+                                          </div>
+                                          <form>
+                                             <div class="form-group">
+                                                <div class="input-group">
+                                                   <div class="input-group-prepend">
+                                                      <span class="input-group-text" id="inputGroup-sizing-default" style="padding:0px 30px 0px 30px">제 목</span>
+                                                   </div>
+                                                   <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="title">
+                                                </div>
+                                             </div>
+                                             <div class="form-group mb-0">
+                                                <div class="input-group">
+                                                   <div class="input-group-prepend">
+                                                      <span class="input-group-text" style="padding:0px 30px 0px 30px">내 용</span>
+                                                   </div>
+                                                   <textarea class="form-control" aria-label="With textarea" style="min-height:300px;" name="content"></textarea>
+                                                </div>
+                                             </div>
+                                          </form>
+                                       </div>
+                                    </div>
+                                    <!-- <div class="col-xl-12">
+                                       <section class="hk-sec-wrapper">
+                                           <div class="row">
+                                               <div class="col-sm">
+                                                   <div class="tinymce-wrap">
+                                                       <textarea class="tinymce"></textarea>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </section>
+                                       </div>
+                                       -->
+                                    <section class="hk-sec-wrapper">
+                                          <div class="card-body" style="padding:0px; margin:30px 0px 10px 0px;">
+                                             <i class="glyphicon glyphicon-search"></i>
+                                             첨부파일을 업로드 할수 있습니다 (최대 5개)
+                                          </div>
+                                       <div  class="row">
+                                          <div class="col-sm">
+                                             <input type="file" class="dropify" name="files[]" id="uploadFiles" multiple/>
+                                          </div>
+                                       </div>
+                                    </section>
+                                    <div class="row">
+                                       <div class="col-sm">
+                                          <div class="card-body" style="padding:0px; margin-bottom:10px;">
+                                             <button type="button" class="btn btn-success" style="margin-top:30px; float:right;" onclick="submit()">등록하기</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </section>
+                              </div>
+                           </div>
+                           <!-- /Row -->
+                        </div>
+                        <!-- /Container -->
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+      <!-- Bootstrap Core JavaScript -->
+      <script th:src="@{/vendors/popper.js/dist/umd/popper.min.js}"></script>
+      <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+      <!-- Slimscroll JavaScript -->
+      <script th:src="@{/dist/js/jquery.slimscroll.js}"></script>
+      <!-- Fancy Dropdown JS -->
+      <script th:src="@{/dist/js/dropdown-bootstrap-extended.js}"></script>
+      <!-- Dropzone JavaScript -->
+      <script th:src="@{/vendors/dropzone/dist/dropzone.js}"></script>
+      <!-- Dropify JavaScript -->
+      <script th:src="@{/vendors/dropify/dist/js/dropify.min.js}"></script>
+      <!-- Form Flie Upload Data JavaScript -->
+      <script th:src="@{/dist/js/form-file-upload-data.js}"></script>
+      <!-- FeatherIcons JavaScript -->
+      <script th:src="@{/dist/js/feather.min.js}"></script>
+      <!-- Toggles JavaScript -->
+      <script th:src="@{/vendors/jquery-toggles/toggles.min.js}"></script>
+      <script th:src="@{/dist/js/toggle-data.js}"></script>
+      <!-- Init JavaScript -->
+      <script th:src="@{/dist/js/init.js}"></script>
+      <script th:src="@{/dist/js/ajax.js}"></script>
+      <script th:src="@{/dist/js/auto-complete.js}"></script>
+      <script>
+         function submit(){
+             var formData = new FormData();
+             var files = document.getElementById('uploadFiles').files;
+             var tagForms = [];
+             var tags = $("#tag-list").children();
+
+             for(var idx=0; idx<tags.length; idx++){
+              var tag = tags[idx];
+              tagForms.push(tag.getAttribute('data-id'));
+             }
+
+             formData.append("title", $("input[name=title]").val());
+             formData.append("content", $("textarea[name=content]").val());
+             formData.append("subjects", tagForms);
+
+             for(let i=0; i < files.length; i++) {
+                formData.append('files', files[i]);
+             }
+
+             postAPI("/forum/main/write",formData, function(result){
+               	switch(result){
+           	    	case "ok":
+           	    		alert("질문이 등록되었습니다.");
+           	    		location.href="/forum/main"
+           	    		break;
+               	}
+           		});
+         }
+
+      </script>
+      <script th:inline="javascript">
+        var countries = [];
+         /*<![CDATA[*/
+
+         /*[# th:each="tmp : ${subject}"]*/
+         noti(/*[[${tmp.idx}]]*/, /*[[${tmp.name}]]*/);
+         /*[/]*/
+         /*]]>*/
+
+         function noti(id, name){
+           countries.push([id, name]);
+         }
+
+        autocomplete(document.getElementById("input-tag"), countries,
+          function(id, name){
+            $("#tag-list").append("<span class='badge badge-primary mt-15 mr-10' data-id='"+id+"'>"+name+"</span>");
+            $("input[name=tag]").val("");
+          }
+        );
+      </script>
+
+   </body>
+</html>
