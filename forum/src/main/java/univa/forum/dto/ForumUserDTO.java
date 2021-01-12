@@ -10,7 +10,7 @@ public class ForumUserDTO {
 	private String password;
 	private String nickname;
 	private String email;
-	private MultipartFile file;
+//	private MultipartFile file;
 	private String image_url;
 	private int grade_idx;
 	private String nation;
@@ -60,12 +60,12 @@ public class ForumUserDTO {
 	public void setState(int state) {
 		this.state = state;
 	}
-	public MultipartFile getFile() {
+/*	public MultipartFile getFile() {
 		return file;
 	}
 	public void setFile(MultipartFile file) {
 		this.file = file;
-	}
+	}*/
 	public String getImage_url() {
 		return image_url;
 	}

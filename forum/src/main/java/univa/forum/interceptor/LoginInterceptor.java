@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.univa.forum.dto.ForumUserDTO;
+import univa.forum.dto.ForumUserDTO;
 
 @Component
 public class LoginInterceptor extends HandlerInterceptorAdapter {
