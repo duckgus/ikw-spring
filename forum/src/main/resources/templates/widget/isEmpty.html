@@ -1,0 +1,52 @@
+<!--
+  게시물에 대한 정보가 없을때 뿌려줄 레이아웃
+-->
+
+<div class="auth-form-wrap pt-xl-0 pt-70" th:fragment="forum" >
+   <div class="auth-form w-xl-25 w-sm-50 w-100" style="width:100% !important;">
+      <a class="d-flex auth-brand align-items-center justify-content-center  mb-45" href="#">
+      <img class="brand-img d-inline-block mr-5" src="/dist/img/logo.png" alt="brand" /><span class="text-dark font-23">Univa</span>
+      </a>
+      <form>
+         <h1 class="display-4 mb-10 text-center">등록된 게시물이 없습니다.</h1>
+         <p class="mb-30 text-center">
+          <a href="/forum/main/write">
+            <u>질문 등록하러 가기</u>
+          </a>
+         </p>
+      </form>
+   </div>
+</div>
+
+<div class="auth-form-wrap pt-xl-0 pt-70" th:fragment="request">
+   <div class="auth-form w-xl-25 w-sm-50 w-100" style="width:100% !important;">
+      <a class="d-flex auth-brand align-items-center justify-content-center  mb-45" href="#">
+      <img class="brand-img d-inline-block mr-5" src="/dist/img/logo.png" alt="brand" /><span class="text-dark font-23">Univa</span>
+      </a>
+      <form>
+         <h1 class="display-4 mb-10 text-center">요청된 수정사항이 없습니다.</h1>
+         <p class="mb-30 text-center">
+          <a href="/forum/main">
+            <u>다른 게시물 보러가기</u>
+          </a>
+         </p>
+      </form>
+   </div>
+</div>
+
+
+<div class="auth-form-wrap pt-xl-0 pt-70" th:fragment="history">
+   <div class="auth-form w-xl-25 w-sm-50 w-100" style="width:100% !important;">
+      <a class="d-flex auth-brand align-items-center justify-content-center  mb-45" href="#">
+      <img class="brand-img d-inline-block mr-5" src="/dist/img/logo.png" alt="brand" /><span class="text-dark font-23">Univa</span>
+      </a>
+      <form>
+         <h1 class="display-4 mb-10 text-center">수정된 이력이 없습니다.</h1>
+         <p class="mb-30 text-center">
+          <a href="/forum/main">
+            <u>다른 게시물 보러가기</u>
+          </a>
+         </p>
+      </form>
+   </div>
+</div>

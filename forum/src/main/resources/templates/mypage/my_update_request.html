@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+   <body data-spy="scroll" data-target=".navbar" data-offset="60">
+      <div class="bg-white shadow-bottom">
+         <div class="container"  style="max-width:1600px;">
+            <ul class="nav nav-light nav-tabs" role="tablist" id="menu-tab">
+               <li class="nav-item">
+                  <a class="d-flex h-60p align-items-center nav-link" onclick="switchContent('/forum/mypage/profile')" style="cursor:pointer;">회원정보</a>
+               </li>
+               <li class="nav-item">
+                  <a class="d-flex h-60p align-items-center nav-link " onclick="switchContent('/forum/mypage/question')" style="cursor:pointer;">나의 질문</a>
+               </li>
+               <li class="nav-item">
+                  <a class="d-flex h-60p align-items-center nav-link" onclick="switchContent('/forum/mypage/forum')" style="cursor:pointer;">나의 포럼</a>
+               </li>
+               <li class="nav-item">
+                  <a class="d-flex h-60p align-items-center nav-link active" onclick="switchContent('/forum/mypage/update_request')" style="cursor:pointer;">수정요청</a>
+               </li>
+            </ul>
+         </div>
+      </div>
+      <div class="hk-wrapper">
+         <div class="hk-pg-wrapper px-0" style="padding-top:0px;">
+            <div class="container-fluid">
+               <!-- Row -->
+               <div class="row">
+                  <div class="col-xl-12 pa-0">
+                     <div class="tab-content mt-sm-60 mt-30">
+                        <div class="tab-pane fade show active" role="tabpanel">
+                           <div class="container"  style="max-width:1600px;">
+                              <div class="hk-row">
+                                 <div class="col-lg-12" >
+                                    <div class="card-columns card-column-1" th:each="list, num : ${questions}" style="margin-bottom:10px;">
+                                       <div class="card card-profile-feed mb-0 rounded-bottom-0">
+                                          <div class="emailapp-wrap">
+                                             <div class="email-box" style="margin-left:0px;">
+                                                <div class="emailapp-right" style="min-width:100%; flex:none; right:0%; position:unset;">
+                                                   <div class="email-body">
+                                                      <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+                                                         <div class="nicescroll-bar" tabindex="-50" style="overflow: hidden; width: auto; height: 100%; outline: none;">
+                                                            <div>
+
+                                                              <!-- 과목 정보 -->
+                                                               <div class="email-subject-head" >
+                                                                  <h4 th:text="${list.title}"></h4>
+                                                                  <div class="d-flex align-items-center" style="margin-bottom:0px;">
+                                                                     <span class="badge badge-secondary mr-10" th:each="subjects : ${list.subjects}" th:text="${subjects.subject.name}"></span>
+                                                                  </div>
+                                                               </div>
+                                                               <hr class="mt-10 mb-20">
+                                                               <div class="email-head">
+
+                                                                 <!-- 게시물 등록자 정보 -->
+                                                                  <div class="media">
+                                                                     <div class="media-img-wrap">
+                                                                        <div class="avatar">
+                                                                           <img th:src="@{${list.user.image_url} != null ? '/forum/img?id=' + ${list.user.image_url} : '/dist/img/img-thumb.jpg'} "
+                                                                              alt="user" class="avatar-img rounded-circle">
+                                                                        </div>
+                                                                     </div>
+                                                                     <div class="media-body">
+                                                                        <span class="text-capitalize sender-name d-inline-block" th:text="${list.user.nickname}"></span>
+                                                                        <span class="sender-email d-inline-block" th:text="'(' + ${list.user.username} + ')'"></span>
+                                                                        <span class="d-block">
+
+                                                                          <span th:text="${list.user.email} == null ? '이메일 미등록' : ${list.user.email}"></span>
+                                                                        </span>
+                                                                     </div>
+                                                                  </div>
+
+                                                                  <!-- 게시물 수정 옵션 -->
+                                                                  <div class="head-other-wrap">
+                                                                     <div class="d-inline-block mr-5">
+                                                                        <span class="d-inline-block" th:text="${#temporals.format(list.update_date, 'yyyy/MM/dd HH:mm')}"></span>
+                                                                     </div>
+                                                                     <div class="d-inline-block dropdown mr-5">
+                                                                        <a class="dropdown-toggle no-caret" data-toggle="dropdown" href="#" aria-expanded="false" role="button"><i class="ion ion-ios-more"></i></a>
+                                                                        <div class="dropdown-menu bullet dropdown-menu-right" role="menu">
+                                                                           <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-reply" aria-hidden="true"></i>수정요청</a>
+                                                                           <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-share" aria-hidden="true"></i>삭제요청</a>
+                                                                           <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-trash" aria-hidden="true"></i>게시물 신고</a>
+                                                                        </div>
+                                                                     </div>
+                                                                  </div>
+
+                                                               </div>
+
+                                                               <!-- 등록한 게시물의 이미지들 -->
+                                                               <div class="email-text-wrap mt-30">
+                                                                  <p class="mb-40" th:utext="${#strings.replace(#strings.escapeXml(list.content),'&#10;','&lt;br&gt;')}"></p>
+                                                                  <div class="d-flex flex-wrap">
+                                            												<a class="w-sm-150p w-80p mr-10 mb-10" th:each="files,num : ${list.files}">
+                                            													<img class="img-fluid rounded"
+                                                                          th:if="${num.index < 6}"
+                                                                          th:src="'/forum/img?id=' + ${files.file_url}"
+                                                                          alt="Card image cap"
+                                                                          style="max-width:150px;">
+                                            												</a>
+                                            											</div>
+                                                               </div>
+
+                                                               <!-- 등록한 게시물의 파일들 -->
+                                                               <hr class="hr-light">
+                                                               <div class="email-attachment-wrap" th:if="${#lists.size(list.files)} > 0">
+                                                                  <div class="email-attachment-block">
+                                                                     <a href="javascript:void(0)" th:each="files,num : ${list.files}">
+                                                                        <div class="card card-sm w-200p">
+                                                                           <div class="card-body d-flex align-items-center" style="background:#f5f5f5;">
+                                                                              <img src="/dist/img/jpgicon.png" class="d-inline-block mr-10" alt="attachicon" >
+                                                                              <span class="d-inline-block mnw-0">
+                                                                              <span class="d-block file-name text-truncate">concept_design.jpg</span>
+                                                                              <small class="d-block file-size text-truncate">5.78 MB</small>
+                                                                              </span>
+                                                                           </div>
+                                                                        </div>
+                                                                     </a>
+                                                                  </div>
+
+                                                                  <!-- 파일 전체 다운로드 -->
+                                                                  <div class="d-flex ml-auto">
+                                                                     <a href="javascript:void(0)"><i class="zmdi zmdi-download"></i></a>
+                                                                  </div>
+
+                                                               </div>
+                                                            </div>
+                                                         </div>
+                                                         <div class="slimScrollBar" tabindex="-50" style="background: rgb(214, 217, 218); width: 6px; position: absolute; top: 0px; opacity: 0.8; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 808px; outline: none;"></div>
+                                                         <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+
+                                          <!-- 수정요청 칸-->
+                                          <div class="card-columns card-column-1" th:each="list : ${list.modifyChildren}" style="margin-bottom:10px;">
+                                            <div th:replace="form/update_request_card :: forum(${list})"></div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

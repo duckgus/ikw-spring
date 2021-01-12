@@ -36,15 +36,19 @@
                                       <input type="file" class="dropify" id="profile-upload" name="file">
                                     </div>
                                  </div>
+                                 <!--<form action="/forum/signup" method="post"> -->
                                  <div class="col-md-6 form-group" >
                                     <div class="col-md-12 form-group">
-                                       <input class="form-control" placeholder="아이디" value="" type="text" name="username" autofocus>
+                                       <!--<input class="form-control" placeholder="아이디" value="" type="text" name="username" autofocus>-->
+                                       <input type="text" id="username" name="username" placeholder="이름을 입력하세요">
                                     </div>
                                     <div class="col-md-12 form-group">
-                                       <input class="form-control" placeholder="패스워드" value="" type="password" name="password">
+                                      <!-- <input class="form-control" placeholder="패스워드" value="" type="password" name="password">-->
+                                       <input type="password" id="password" name="password" placeholder="패스워드를 입력하세요">
                                     </div>
                                     <div class="col-md-12 form-group">
-                                       <input class="form-control" placeholder="닉네임" type="text" name="nickname">
+                                      <!-- <input class="form-control" placeholder="닉네임" type="text" name="nickname"> -->
+                                       <input type="text" id="nickname" name="nickname" placeholder="닉네임을 입력하세요">
                                     </div>
                                  </div>
                               </div>
@@ -59,9 +63,12 @@
                                  <label class="custom-control-label font-14" for="same-address">개인정보수집 이용약관 동의 <a href=""><u>자세히보기</u></a> </label>
                               </div>
                               <button class="btn btn-warning btn-block" onclick="submit()">Register</button>
+                              <!--<button class="btn btn-warning btn-block" btype="submit">Register</button>
+                              </form> -->
                               <div class="option-sep">or</div>
                               <p class="text-center">Already have an account? <a href="/forum/signin">Sign In</a></p>
                            </div>
+
                         </div>
                      </div>
                   </div>
@@ -88,29 +95,6 @@
       <script th:src="@{/dist/js/init.js}"></script>
       <script th:src="@{/dist/js/ajax.js}"></script>
       <script>
-        imagePreView(document.getElementById("profile-upload"));
-
-        function imagePreView(target, callback) {
-        	var img = new Image();
-        	console.log("target : ", target);
-        	target.onchange = function (e) {
-        		e.preventDefault();
-        		var file = target.files[0],
-        		reader = new FileReader();
-        		reader.onload = function (event) {
-        			img.src = event.target.result;
-        			img.width = 150;
-        			img.height = 220;
-        			img.id = target.id;
-        			$("#profile-img").attr("src", img.src);
-        			$("#profile-img").show();
-        			$("#profile-upload-div").hide();
-        			console.log("@@@@");
-        		};
-        		reader.readAsDataURL(file);
-        		$("#profile-img").css("cursor", "pointer");
-        	};
-        }
 
         function submit() {
         	var formData = new FormData();
@@ -118,19 +102,11 @@
         		"username": null,
         		"password": null,
         		"nickname": null,
-        		"email": null,
-        		"nation": null,
-        		"file": null
         	};
-        	var image_url = document.getElementById('profile-upload').files[0];
         	formData.append("username", $("input[name=username]").val());
         	formData.append("password", $("input[name=password]").val());
         	formData.append("nickname", $("input[name=nickname]").val());
-        	formData.append("email", $("input[name=email]").val());
-        	formData.append("nation", $("input[name=nation]").val());
-        	formData.append("file", image_url);
-        	postAPI("/forum/signup", formData, function (result) {
-            if(result == "ok"){
+        	if(result == "ok"){
               alert("회원가입이 완료되었습니다. 로그인을 해주세요.")
               location.href="/forum/signin";
             }

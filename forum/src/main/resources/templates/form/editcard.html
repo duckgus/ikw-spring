@@ -1,0 +1,93 @@
+<div class="card card-profile-feed mb-0 rounded-bottom-0" th:fragment="forum(forum)">
+   <div class="emailapp-wrap">
+      <div class="email-box" style="margin-left:0px;">
+         <div class="emailapp-right" style="min-width:100%; flex:none; right:0%; position:unset;">
+            <div class="email-body">
+               <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+                  <div class="nicescroll-bar" tabindex="-50" style="overflow: hidden; width: auto; height: 100%; outline: none;">
+                     <div>
+
+                       <!-- 게시물에 속한 과목들 -->
+                        <div class="email-subject-head" >
+                           <input type="text" class="form-control" name="title" th:value="${forum.title}" style="background:#fff;">
+                           <div class="d-flex align-items-center" style="margin-bottom:0px;" id="subjects-list">
+                              <span class="badge badge-secondary ml-10" th:each="subjects : ${forum.subjects}" th:text="${subjects.subject.name}" th:data-id="${subjects.idx}"></span>
+                           </div>
+                        </div>
+
+                        <!-- 게시자의 정보 -->
+                        <hr class="mt-10 mb-20">
+                        <div class="email-head">
+                           <div class="media">
+                              <div class="media-img-wrap">
+                                 <div class="avatar">
+                                    <img th:src="@{${session.ForumUserSession?.image_url} != null ? '/forum/img?id=' + ${session.ForumUserSession?.image_url} : '/dist/img/img-thumb.jpg'} "
+                                       alt="user" class="avatar-img rounded-circle">
+                                 </div>
+                              </div>
+                              <div class="media-body">
+                                 <span class="text-capitalize sender-name d-inline-block" th:text="${session.ForumUserSession.nickname}"></span>
+                                 <span class="sender-email d-inline-block" th:text="'(' + ${session.ForumUserSession.username} + ')'"></span>
+                                 <span class="d-block">
+
+                                   <span th:text="${session.ForumUserSession.email} == null ? '이메일 미등록' : ${session.ForumUserSession.email}"></span>
+                                 </span>
+                              </div>
+                           </div>
+                           <div class="head-other-wrap">
+                              <div class="d-inline-block mr-5">
+                                 <span class="d-inline-block"></span>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="email-text-wrap mt-30">
+                           <textarea class="form-control" aria-label="With textarea" style="min-height:300px;" name="content" th:text="${forum.content}"></textarea>
+                        </div>
+
+                        <!-- 게시물에 등록된 파일 정보들 -->
+                        <hr class="hr-light">
+                        <div class="email-attachment-wrap" th:if="${#lists.size(forum.files)} > 0">
+                           <div class="email-attachment-block" id="'file-list-' + ${forum.idx}">
+                              <a th:each="files,num : ${forum.files}"  th:id="'file-index-' + ${num.index}" th:data-id="${files.idx}" th:data-url="'/forum/getfile?id=' + ${files.idx}" th:data-name="${files.name}">
+                                 <div class="card card-sm w-200p">
+                                    <div class="card-body d-flex align-items-center">
+                                      <button type="button" class="close" style="position:absolute; right:0; top:0;"  th:onclick="'removeFile(' + ${num.index} +')'">
+                                           <span aria-hidden="true" style="font-size:15px;">×</span>
+                                       </button>
+                                       <img src="/dist/img/jpgicon.png" class="d-inline-block mr-10" alt="attachicon">
+                                       <span class="d-inline-block mnw-0">
+                                         <span class="d-block file-name text-truncate" th:text="${files.name}"></span>
+                                         <small class="d-block file-size text-truncate"
+                                                th:text="${#numbers.formatDecimal((files.file_size)/2^10, 1, 'POINT', 1, 'POINT')} + ' KB'"></small>
+                                       </span>
+                                    </div>
+                                 </div>
+                              </a>
+                           </div>
+
+                           <!-- 파일 전체다운로드 -->
+                           <div class="d-flex ml-auto">
+                              <a th:onclick="'allDownload(' + ${forum.idx} +')'" style="cursor:pointer;"><i class="zmdi zmdi-download"></i></a>
+                           </div>
+                        </div>
+
+                        <!-- 파일 업로드 -->
+                        <hr class="hr-light">
+                          <section class="hk-sec-wrapper">
+                               <div class="card-body" style="padding:0px; margin:30px 0px 10px 0px;">
+                                  <i class="glyphicon glyphicon-search"></i>
+                                  첨부파일을 업로드 할수 있습니다 (최대 5개)
+                               </div>
+                            <div  class="row">
+                               <input type="file" class="dropify" id="uploadFiles" multiple/>
+                            </div>
+                          </section>
+                          <button type="button" class="btn btn-success" style="margin:15px 0px 15px 0px; float:right;" onclick="submit()">등록하기</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
