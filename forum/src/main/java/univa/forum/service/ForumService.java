@@ -21,6 +21,7 @@ public class ForumService {
         mUser.setPassword(userDto.getPassword());
         mUser.setNickname(userDto.getNickname());
         mUser.setEmail(userDto.getEmail());
+        mUser.setNation(userDto.getNation());
         //if(true){
         if(validateDuplicateUser(mUser)) {
             if( forumRepository.save(mUser).getUsername().equals(userDto.getUsername()) ) {
