@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+   <head th:replace="widget/head :: head"></head>
+   <link th:href="@{/vendors/dropzone/dist/dropzone.css}" rel="stylesheet" type="text/css">
+   <link th:href="@{/vendors/dropify/dist/css/dropify.min.css}" rel="stylesheet" type="text/css">
+   <link th:href="@{/vendors/jquery-toggles/css/toggles.css}" rel="stylesheet" type="text/css">
+   <link th:href="@{/vendors/jquery-toggles/css/themes/toggles-light.css}" rel="stylesheet" type="text/css">
+   <link th:href="@{/dist/css/style.css}" rel="stylesheet" type="text/css">
+   <body data-spy="scroll" data-target=".navbar" data-offset="60">
+      <!-- Preloader -->
+      <div class="preloader-it">
+         <div class="loader-pendulums"></div>
+      </div>
+      <!-- /Preloader -->
+      <!-- HK Wrapper -->
+      <div class="hk-wrapper">
+         <!-- Header -->
+         <div th:replace="widget/menu :: menu('null')"></div>
+         <div class="hk-pg-wrapper hk-auth-wrapper">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-xl-12">
+                     <div class="auth-form-wrap pt-xl-0 pt-70">
+                        <div class="auth-form w-xl-30 w-lg-55 w-sm-75 w-100">
+                           <a class="d-flex auth-brand align-items-center justify-content-center  mb-20" href="/forum">
+                           <img class="brand-img d-inline-block mr-5" th:src="@{/dist/img/logo.png}" alt="brand" />
+                           <span class="text-dark font-23">Univa</span>
+                           </a>
+                           <div>
+                              <h1 class="display-4 mb-10 text-center">Sign up for free</h1>
+                              <p class="mb-30 text-center">회원가입을 하고 자유롭게 질문과 답변을 해보세요</p>
+                              <div class="row">
+                                 <form action="/sign/signup" method="post">
+                                    <div class="col-md-12 form-group">
+                                       <input class="form-control" placeholder="아이디" value="" type="text" name="username" autofocus>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                       <input class="form-control" placeholder="패스워드" type="password" name="password">
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                       <input class="form-control" placeholder="닉네임" type="text" name="nickname">
+                                    </div>
+                              </div>
+                              <div class="form-group" style="margin-top:30px;">
+                                 <input class="form-control" placeholder="이메일" type="email" name="email">
+                              </div>
+                              <div class="form-group">
+                                 <input class="form-control" placeholder="국가" type="text" name="nation">
+                              </div>
+                              <div class="custom-control custom-checkbox mb-25">
+                                 <input class="custom-control-input" id="same-address" type="checkbox" checked>
+                                 <label class="custom-control-label font-14" for="same-address">개인정보수집 이용약관 동의 <a href=""><u>자세히보기</u></a> </label>
+                              </div>
+                              <button class="btn btn-warning btn-block" type="submit">Register</button>
+                              </from>
+                              <div class="option-sep">or</div>
+                              <p class="text-center">Already have an account? <a href="/sign/signin">Sign In</a></p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- /HK Wrapper -->
+      <!-- jQuery -->
+      <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+      <!-- Bootstrap Core JavaScript -->
+      <script th:src="@{/vendors/popper.js/dist/umd/popper.min.js}"></script>
+      <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+      <!-- Owl JavaScript -->
+      <script th:src="@{/vendors/owl.carousel/dist/owl.carousel.min.js}"></script>
+      <script th:src="@{/dist/js/jquery.slimscroll.js}"></script>
+      <!-- FeatherIcons JavaScript -->
+      <script th:src="@{/dist/js/feather.min.js}"></script>
+      <!-- Gallery JavaScript -->
+      <script th:src="@{/vendors/lightgallery/dist/js/lightgallery-all.min.js}"></script>
+      <!-- Init JavaScript -->
+      <script th:src="@{/dist/js/lightgallery-all.js}"></script>
+      <script th:src="@{/dist/js/landing-data.js}"></script>
+      <script th:src="@{/dist/js/init.js}"></script>
+      <script th:src="@{/dist/js/ajax.js}"></script>
+      <script>
+
+      </script>
+   </body>
+</html>
