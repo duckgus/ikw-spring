@@ -1,7 +1,7 @@
 package duck.duck_forum.controller;
 
+import duck.duck_forum.domain.DuckPost;
 import duck.duck_forum.domain.Duck_User;
-import duck.duck_forum.dto.DuckUserDto;
 import duck.duck_forum.service.DuckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,45 +22,53 @@ public class DuckController {
         this.duckService = duckService;
     }
 
-    @GetMapping("")
-    public String indexPage() {
+    @GetMapping("/")
+    public String home() {
+        System.out.println("index");
+        return "index";
+    }
+    /*로그인*/
+    @GetMapping("signin")
+    public String Login() {
+        System.out.println("로그인 페이지");
+        return "login";
+    }
+    @PostMapping("signin")
+    public String signin(DuckPost duckPost, Model model, HttpSession httpSession) {
+        System.out.println("로그인");
+        Optional<DuckPost> user = duckService.login(duckPost);
+        if(user.isPresent()){
+            httpSession.setAttribute("DuckSession", user.get());
+            return "ok";
+        }else{
+            return "false";
+        }
+//        System.out.println("로그인");
+
+//        return "/main/index";
+    }
+
+    /*회원가입*/
+    @GetMapping("signup")
+    public String SignUpPage() {
+        System.out.println("회원가입 페이지");
+        return "signup";
+    }
+    @PostMapping("signup")
+    public String Signup(DuckPost duckPost) {
+        Duck_User user = new Duck_User();
+        user.setUsername(duckPost.getUsername());
+        user.setPassword(duckPost.getPassword());
+
+        duckService.join(user);
+        System.out.println("회원가입");
+        return "redirect:/";
+    }
+
+    @GetMapping("logout")
+    public String logout() {
+        System.out.println("로그아웃");
         return "index";
     }
 
-    @GetMapping("/sign/signin")
-    public String signinPage() {
-        return "/sign/signin";
-    }
-
-    @PostMapping("/sign/signin")
-//    @ResponseBody
-    public String signin(DuckUserDto duckUserDto, Model model, HttpSession session){
-        Optional<DuckUserDto> user = duckService.Signin(duckUserDto);
-        if (user.isPresent()) {
-//            session.setAttribute("Duck_UserSession", user.get());
-            return "/index";
-
-        }else{
-            return null;
-        }
-    }
-
-    @GetMapping("/sign/signup")
-    public String signupPage() {
-        return "sign/signup";
-    }
-
-    @PostMapping("/sign/signup")
-    public String signup(DuckForm form) {
-        Duck_User dUser = new Duck_User();
-        dUser.setUsername(form.getUsername());
-        dUser.setPassword(form.getPassword());
-        dUser.setNickname(form.getNickname());
-        dUser.setEmail(form.getEmail());
-        dUser.setNation(form.getNation());
-
-        duckService.signup(dUser);
-        return "sign/signin";
-    }
 }
-

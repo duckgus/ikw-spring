@@ -1,14 +1,6 @@
 package duck.duck_forum.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity
-public class Duck_User {
-
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DuckPost {
     private int idx;
     private String username;
     private String password;

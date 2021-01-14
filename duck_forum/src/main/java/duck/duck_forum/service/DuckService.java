@@ -1,52 +1,50 @@
 package duck.duck_forum.service;
 
+import duck.duck_forum.domain.DuckPost;
 import duck.duck_forum.domain.Duck_User;
-import duck.duck_forum.dto.DuckUserDto;
 import duck.duck_forum.repository.DuckRepository;
-import duck.duck_forum.repository.JpaDuckRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Transactional
 public class DuckService {
-    private DuckRepository duckRepository;
-    @Autowired
+    private final DuckRepository duckRepository;
+
     public DuckService(DuckRepository duckRepository) {
         this.duckRepository = duckRepository;
     }
 
-    public int signup(Duck_User dUser) {
-        validateDuplicateMember(dUser);
-        duckRepository.save(dUser);
-        return dUser.getIdx();
+    public int join(Duck_User user){
+        validateDuplicateMember(user);
+        duckRepository.save(user);
+        return user.getIdx();
     }
-    private void validateDuplicateMember(Duck_User dUser) {
-        duckRepository.findByUsername(dUser.getUsername())
-                .ifPresent(m -> {
+
+    public void validateDuplicateMember(Duck_User user) {
+        duckRepository.findByUsername(user.getUsername())
+                .ifPresent(m ->{
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
     }
 
-    public Optional<DuckUserDto> Signin(DuckUserDto duckUserDto) {
-        Duck_User dUser = new Duck_User();
-        dUser.setUsername(duckUserDto.getUsername());
-        dUser.setPassword(duckUserDto.getPassword());
+    public Optional<DuckPost> login(DuckPost duckPost) {
+        Duck_User duck_user = new Duck_User();
+        duck_user.setUsername(duckPost.getUsername());
+        duck_user.setPassword(duckPost.getPassword());
 
-        Optional<Duck_User> foundUser = duckRepository.findUserByUsernameAndPassword(dUser);
+        Optional<Duck_User> foundUser = duckRepository.findByUsernameANDPassword(duck_user);
         if (foundUser.isPresent()) {
             Duck_User user = foundUser.get();
-            DuckUserDto returnUserDTO = new DuckUserDto();
-            returnUserDTO.setIdx(user.getIdx());
-            returnUserDTO.setNickname(user.getNickname());
-            returnUserDTO.setPassword(user.getPassword());
-            returnUserDTO.setNickname(user.getNickname());
-            returnUserDTO.setEmail(user.getEmail());
-            returnUserDTO.setNation(user.getNation());
-            return Optional.ofNullable(returnUserDTO);
+            DuckPost dto = new DuckPost();
+
+            dto.setUsername(user.getUsername());
+            dto.setPassword(user.getPassword());
+            return Optional.ofNullable(dto);
         }else{
             return Optional.ofNullable(null);
         }
+
     }
 }
+

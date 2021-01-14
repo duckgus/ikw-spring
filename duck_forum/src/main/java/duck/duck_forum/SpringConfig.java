@@ -12,20 +12,20 @@ import javax.sql.DataSource;
 @Configuration
 public class SpringConfig {
     private final DataSource dataSource;
-    private final EntityManager em;
+    private final EntityManager entityManager;
 
-    public SpringConfig(DataSource dataSource, EntityManager em) {
+    public SpringConfig(DataSource dataSource, EntityManager entityManager) {
         this.dataSource = dataSource;
-        this.em = em;
+        this.entityManager = entityManager;
     }
 
     @Bean
-    public DuckService duckService(){
+    public DuckService duckService() {
         return new DuckService(duckRepository());
     }
 
     @Bean
-    public DuckRepository duckRepository(){
-        return new JpaDuckRepository(em);
+    public DuckRepository duckRepository() {
+        return new JpaDuckRepository(entityManager);
     }
 }
