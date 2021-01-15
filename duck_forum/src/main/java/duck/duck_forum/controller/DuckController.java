@@ -45,8 +45,8 @@ public class DuckController {
             return "/main/index";
         }else {
             System.out.println("로그인 실패");
-//            model.addAttribute("message", "로그인 실패");
-            return "signin";
+            model.addAttribute("msg", "로그인 실패");
+            return "redirect:/";
         }
 
 

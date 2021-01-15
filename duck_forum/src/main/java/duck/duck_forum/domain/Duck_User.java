@@ -12,6 +12,7 @@ public class Duck_User {
     private int idx;
     private String username;
     private String password;
+    private String email;
 
     public int getIdx() {
         return idx;
@@ -35,5 +36,13 @@ public class Duck_User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

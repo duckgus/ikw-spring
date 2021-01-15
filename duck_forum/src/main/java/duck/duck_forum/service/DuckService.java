@@ -39,6 +39,7 @@ public class DuckService {
             duck.getIdx();
             duck.getUsername();
             duck.getPassword();
+            duck.getEmail();
             return Optional.of(duck);
         }else{
             return Optional.ofNullable(null);
