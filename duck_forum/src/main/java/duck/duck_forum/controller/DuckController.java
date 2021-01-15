@@ -34,18 +34,28 @@ public class DuckController {
         return "login";
     }
     @PostMapping("signin")
-    public String signin(DuckPost duckPost, Model model, HttpSession httpSession) {
+    public String signin(Duck_User user, Model model) {
         System.out.println("로그인");
-        Optional<DuckPost> user = duckService.login(duckPost);
-        if(user.isPresent()){
+        user.getUsername();
+        user.getPassword();;
+        System.out.println("[Controller user]"+user);
+        Optional<Duck_User> duck = duckService.login(user);
+        if (duck.isPresent()) {
+            System.out.println("로그인 성공");
+            return "/main/index";
+        }else {
+            System.out.println("로그인 실패");
+//            model.addAttribute("message", "로그인 실패");
+            return "signin";
+        }
+
+
+/*        if(user.isPresent()){
             httpSession.setAttribute("DuckSession", user.get());
             return "ok";
         }else{
             return "false";
-        }
-//        System.out.println("로그인");
-
-//        return "/main/index";
+        }*/
     }
 
     /*회원가입*/
@@ -55,10 +65,10 @@ public class DuckController {
         return "signup";
     }
     @PostMapping("signup")
-    public String Signup(DuckPost duckPost) {
-        Duck_User user = new Duck_User();
-        user.setUsername(duckPost.getUsername());
-        user.setPassword(duckPost.getPassword());
+    public String Signup(Duck_User user) {
+        user.getUsername();
+        user.getPassword();
+        System.out.println(user);
 
         duckService.join(user);
         System.out.println("회원가입");

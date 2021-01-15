@@ -16,31 +16,30 @@ public class DuckService {
     }
 
     public int join(Duck_User user){
+        System.out.println("Join");
         validateDuplicateMember(user);
         duckRepository.save(user);
         return user.getIdx();
     }
 
     public void validateDuplicateMember(Duck_User user) {
+        System.out.println("중복조회");
         duckRepository.findByUsername(user.getUsername())
                 .ifPresent(m ->{
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
     }
 
-    public Optional<DuckPost> login(DuckPost duckPost) {
-        Duck_User duck_user = new Duck_User();
-        duck_user.setUsername(duckPost.getUsername());
-        duck_user.setPassword(duckPost.getPassword());
+    public Optional<Duck_User> login(Duck_User user) {
 
-        Optional<Duck_User> foundUser = duckRepository.findByUsernameANDPassword(duck_user);
-        if (foundUser.isPresent()) {
-            Duck_User user = foundUser.get();
-            DuckPost dto = new DuckPost();
-
-            dto.setUsername(user.getUsername());
-            dto.setPassword(user.getPassword());
-            return Optional.ofNullable(dto);
+        Optional<Duck_User> foundUser = duckRepository.findByUsernameANDPassword(user);
+//        return Optional.ofNullable(foundUser.get());
+        if(foundUser.isPresent()){
+            Duck_User duck = foundUser.get();
+            duck.getIdx();
+            duck.getUsername();
+            duck.getPassword();
+            return Optional.of(duck);
         }else{
             return Optional.ofNullable(null);
         }
