@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.*;
 import java.util.Optional;
 
 @Controller
@@ -36,17 +37,23 @@ public class DuckController {
     @PostMapping("signin")
     public String signin(Duck_User user, Model model) {
         System.out.println("로그인");
-        user.getUsername();
-        user.getPassword();;
+        System.out.println(user.getUsername());
+        System.out.println(user.getPassword());
+        System.out.println(user.getEmail());
         System.out.println("[Controller user]"+user);
         Optional<Duck_User> duck = duckService.login(user);
         if (duck.isPresent()) {
             System.out.println("로그인 성공");
             return "/main/index";
+//            return "/main/index";
         }else {
             System.out.println("로그인 실패");
-            model.addAttribute("msg", "로그인 실패");
-            return "redirect:/";
+//            model.addAttribute("msg", "메시지");
+/*            JOptionPane.showMessageDialog(null,
+                    "로그인실패","제목",
+                    JOptionPane.WARNING_MESSAGE);*/
+
+            return "/login";
         }
 
 

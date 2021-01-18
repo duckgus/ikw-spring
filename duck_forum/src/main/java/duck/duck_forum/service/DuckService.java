@@ -15,9 +15,10 @@ public class DuckService {
         this.duckRepository = duckRepository;
     }
 
-    public int join(Duck_User user){
+    public int join(Duck_User user) {
         System.out.println("Join");
         validateDuplicateMember(user);
+        validateDuplicateEmail(user);
         duckRepository.save(user);
         return user.getIdx();
     }
@@ -25,26 +26,62 @@ public class DuckService {
     public void validateDuplicateMember(Duck_User user) {
         System.out.println("중복조회");
         duckRepository.findByUsername(user.getUsername())
-                .ifPresent(m ->{
+                .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
     }
 
-    public Optional<Duck_User> login(Duck_User user) {
+    public void validateDuplicateEmail(Duck_User user) {
+        System.out.println("중복조회");
+        duckRepository.findByUseremail(user.getEmail())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("이미 존재하는 이메일입니다.");
+                });
+    }
 
-        Optional<Duck_User> foundUser = duckRepository.findByUsernameANDPassword(user);
-//        return Optional.ofNullable(foundUser.get());
-        if(foundUser.isPresent()){
+    public Optional<Duck_User> login(Duck_User user) {
+        System.out.println("login user name : " + user.getUsername());
+        System.out.println("login user name : " + user.getEmail());
+
+/*        Optional<Duck_User> foundUser = duckRepository.findByUseremailANDPassword(user);
+        if (foundUser.isPresent()) {
             Duck_User duck = foundUser.get();
             duck.getIdx();
             duck.getUsername();
             duck.getPassword();
             duck.getEmail();
             return Optional.of(duck);
-        }else{
+        } else {
             return Optional.ofNullable(null);
-        }
+        }*/
 
+        if (user.getEmail().contains("@")) {
+            Optional<Duck_User> foundUser = duckRepository.findByUseremailANDPassword(user);
+            if (foundUser.isPresent()) {
+                Duck_User duck = foundUser.get();
+                duck.getIdx();
+                duck.getUsername();
+                duck.getPassword();
+                duck.getEmail();
+                return Optional.of(duck);
+            } else {
+                return Optional.ofNullable(null);
+            }
+        } else {
+            Optional<Duck_User> foundUser = duckRepository.findByUsernameANDPassword(user);
+            if (foundUser.isPresent()) {
+                Duck_User duck = foundUser.get();
+                duck.getIdx();
+                duck.getUsername();
+                duck.getPassword();
+                duck.getEmail();
+                return Optional.of(duck);
+            } else {
+                return Optional.ofNullable(null);
+            }
+        }
+//      return Optional.ofNullable(foundUser.get());
     }
 }
+
 

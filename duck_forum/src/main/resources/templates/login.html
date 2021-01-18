@@ -69,10 +69,17 @@ License: You must have a valid license purchased only from templatemonster to le
               <form action="signin" method="post">
                 <h1 class="display-4 mb-10">Welcome Back :)</h1>
                 <p class="mb-30">Sign in to your account and enjoy unlimited perks.</p>
-                <div class="form-group">
+<!--                <div class="form-group">-->
+                <div class="form-row">
+                  <div class="col-md-5 form-group">
                   <input class="form-control" placeholder="pull name" id="username" name="username" type="text">
                 </div>
-                <div class="form-group">
+                  OR
+                <div class="col-md-6 form-group">
+                <input class="form-control" placeholder="Email" id="email" name="email" type="text">
+                </div>
+                </div>
+                  <div class="form-group">
                   <div class="input-group">
                     <input class="form-control" placeholder="Password" id="password" name="password" type="password">
                     <div class="input-group-append">
@@ -132,10 +139,7 @@ License: You must have a valid license purchased only from templatemonster to le
 <script src="dist/js/init.js"></script>
 <script src="dist/js/login-data.js"></script>
 <script>
-  var message = '${msg}';
-  var returnUrl = '${index}';
-  alert(msg);
-  docum e nt.location.href = url;
+<!--alert("mag");-->
 </script>
 </body>
 </html>

@@ -39,4 +39,22 @@ public class JpaDuckRepository implements DuckRepository{
                 .setParameter("password", user.getPassword()).getResultList();
         return result.stream().findAny();
     }
+
+    @Override
+    public Optional<Duck_User> findByUseremail(String user) {
+        System.out.println("[findByUseremail] user : " + user);
+        List<Duck_User> result = entityManager.createQuery("select m from Duck_User m where email = :email", Duck_User.class)
+                .setParameter("email", user).getResultList();
+        return result.stream().findAny();
+    }
+
+    @Override
+    public Optional<Duck_User> findByUseremailANDPassword(Duck_User user) {
+        System.out.println("[findByUseremailANDPassword] user : " + user);
+        List<Duck_User> result = entityManager.createQuery("select u from Duck_User u where email = :email AND password = :password", Duck_User.class)
+                .setParameter("email", user.getEmail())
+                .setParameter("password", user.getPassword()).getResultList();
+        return result.stream().findAny();
+    }
+
 }
