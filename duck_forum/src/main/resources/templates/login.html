@@ -141,7 +141,7 @@ License: You must have a valid license purchased only from templatemonster to le
 <script>
 $(document).ready(function(){
   $('btn_login').click(function(){
-  var username = $("input(username)").val();
+  var username = $(username).val();
   document.form.action="/login"
   document.form.submit();
   });

@@ -1,6 +1,5 @@
 package duck.duck_forum.service;
 
-import duck.duck_forum.domain.DuckPost;
 import duck.duck_forum.domain.Duck_User;
 import duck.duck_forum.repository.DuckRepository;
 
@@ -41,19 +40,7 @@ public class DuckService {
 
     public Optional<Duck_User> login(Duck_User user) {
         System.out.println("login user name : " + user.getUsername());
-        System.out.println("login user name : " + user.getEmail());
-
-/*        Optional<Duck_User> foundUser = duckRepository.findByUseremailANDPassword(user);
-        if (foundUser.isPresent()) {
-            Duck_User duck = foundUser.get();
-            duck.getIdx();
-            duck.getUsername();
-            duck.getPassword();
-            duck.getEmail();
-            return Optional.of(duck);
-        } else {
-            return Optional.ofNullable(null);
-        }*/
+        System.out.println("login user email : " + user.getEmail());
 
         if (user.getEmail().contains("@")) {
             Optional<Duck_User> foundUser = duckRepository.findByUseremailANDPassword(user);
@@ -80,7 +67,6 @@ public class DuckService {
                 return Optional.ofNullable(null);
             }
         }
-//      return Optional.ofNullable(foundUser.get());
     }
 }
 
