@@ -5,7 +5,7 @@ Author: Hencework
 Support: support@hencework.com
 License: You must have a valid license purchased only from themeforest to legally use the template for your project.
 -->
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
    <meta charset="UTF-8" />
@@ -60,7 +60,7 @@ License: You must have a valid license purchased only from themeforest to legall
                      <a class="nav-link" data-scroll href="#faq_sec">Faq</a>
                   </li>
                   <li class="nav-item mr-10">
-                     <h6>${duck_user.username}님</h6>
+                     <span th:text="${session.namename} + '님'"></span>
 <!--                     <a class="nav-link" href="documentation.html" target="_blank">????</a>-->
                   </li>
                </ul>

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.swing.*;
@@ -35,19 +36,23 @@ public class DuckController {
         return "login";
     }
     @PostMapping("signin")
-    public String signin(Duck_User user, Model model) {
+    public String signin(Duck_User user, Model model,HttpSession session) {
         System.out.println("로그인");
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-        System.out.println(user.getEmail());
+        System.out.println("username : " + user.getUsername());
+        System.out.println("password : " +user.getPassword());
+        System.out.println("session : " + session.getAttribute(user.getUsername()));
         System.out.println("[Controller user]"+user);
         Optional<Duck_User> duck = duckService.login(user);
         if (duck.isPresent()) {
+            session.setAttribute("username", user.getUsername());
             System.out.println("로그인 성공");
             return "/main/index";
 //            return "/main/index";
-        }else {
+
+                                                  }else {
             System.out.println("로그인 실패");
+            ModelAndView mav = new ModelAndView();
+            mav.addObject("msg","fail");
 //            model.addAttribute("msg", "메시지");
 /*            JOptionPane.showMessageDialog(null,
                     "로그인실패","제목",
@@ -83,8 +88,9 @@ public class DuckController {
     }
 
     @GetMapping("logout")
-    public String logout() {
+    public String logout(HttpSession session) {
         System.out.println("로그아웃");
+        session.invalidate();
         return "index";
     }
 
